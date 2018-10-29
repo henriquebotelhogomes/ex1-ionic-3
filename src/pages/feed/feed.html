@@ -15,20 +15,24 @@
 
 <ion-content padding>
 
-  <ion-card>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+  <ion-card *ngFor="let filme of lista_filmes">
 
     <ion-item>
       <ion-avatar item-start>
         <img src="assets/imgs/marty-avatar.png">
       </ion-avatar>
-      <h2 class="feed_title">{{ objeto_feed.titulo }}</h2>
-      <p>{{objeto_feed.data}}</p>
+      <h2 class="feed_title">{{ filme.title }}</h2>
+      <p>{{filme.release_date}}</p>
     </ion-item>
   
-    <img src="assets/imgs/marty-avatar.png">
+    <img src="https://image.tmdb.org/t/p/w500{{filme.backdrop_path}}">
   
     <ion-card-content>
-      <p>{{objeto_feed.titulo.descricao}}</p>
+      <p>{{filme.overview}}</p>
     </ion-card-content>
   
     <ion-row>
@@ -50,6 +54,14 @@
         </ion-note>
       </ion-col>
     </ion-row>
+
+    <button ion-button block (click)="abrirDetalhes(filme)">Detalhes</button>
   
   </ion-card>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+
 </ion-content>
